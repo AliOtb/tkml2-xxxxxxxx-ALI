@@ -1,0 +1,37 @@
+<html><body>
+<form method="post">
+User Name : <input type="text" name="name"/></br>
+Password : <input type="text" name="pass"/></br>
+<input type="submit" name="submit" value ="submit"/></br>
+<h4><a href ="register.php">NEW USER</a></h4>
+</form>
+
+
+<?php
+	include ("config.php");
+	session_start();
+	if (isset($_POST['submit']))
+	{
+		$uname = $_POST['name'];
+		$pass =$_POST['pass'];
+		if(!empty($uname) && !empty ($pass))
+		{
+			$s ="SELECT username,password FROM emp WHERE
+			username = '$uname' and password ='$pass'";
+			$result=mysqli_query($conn,$s);
+			if (mysqli_num_rows ($result) == 1)
+			{
+				$_SESSION['login_uer'] = $uname;
+			header ("location: welcome.php");
+			
+		}
+		else
+		echo "Your Login Name or password is invalid</br>";
+	}
+	else echo "Name and password can`t be empty";
+	}
+
+
+?>
+
+</html></body>
